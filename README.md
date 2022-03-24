@@ -2,9 +2,9 @@
 
 - git clone
 - npm install
-- npx ts-node src/index.ts [initialValue]
+- npx ts-node src/index.ts `initialValue`.
 
-[initialValue] is the number of your first file in secuence, for example `npx ts-node src/index.ts 10` if your first file is name 10.png/10.json.
+`initialValue` is the number of your first file in secuence, for example `npx ts-node src/index.ts 10` if your first file is name 10.png/10.json.
 
 You must have the same length/name of the files between images/json files
 

@@ -1,4 +1,4 @@
-# Script uploading Images to IPFS Network and editing the json file of Bueno.art
+# Script uploading Images to IPFS Network and editing the json file of Bueno.art. 👾
 
 - git clone
 - npm install

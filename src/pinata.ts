@@ -2,8 +2,8 @@ import { ReadStream } from 'fs';
 import axios from 'axios';
 const FormData = require('form-data');
 
-const pinataApiKey = "ad5f025d8d221562ab4a";
-const pinataSecretApiKey = "0de8cfb983bdd6878d7908214e7b5e904f0e767933040eb4559bdd616938448c"
+const pinataApiKey = "9aab924d9c6eeb5cad63";
+const pinataSecretApiKey = "2843022459b4a601c333a89453a867787f00ec96fea8f7edd1a7efb734c37e22"
 
 export const pinFileToIPFS = (image: ReadStream, name: string ) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;

@@ -50,13 +50,12 @@ const uploadDataPinata = async () => {
 
     if (json === null || json === undefined)
       return console.log("Json Not Found:", i);
-
     try {
-      const { IpfsHash } = await pinFileToIPFS(image, `${i}-bm.png`);
+      const { IpfsHash } = await pinFileToIPFS(image, `${i}-charros-jalisco.png`);
       console.log(`Hash of file ${i} is ${IpfsHash}`);
 
       // Edit Object
-      JsonParse["image"] = `https://gateway.pinata.cloud/ipfs/${IpfsHash}`;
+      JsonParse["image"] = `ipfs://${IpfsHash}`;
 
       // Write file JSON with the same name of image 1 - If not launch error
       fs.writeFileSync(

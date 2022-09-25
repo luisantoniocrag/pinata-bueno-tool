@@ -1,11 +1,19 @@
 import { ReadStream } from 'fs';
 import axios from 'axios';
 const FormData = require('form-data');
+const Bottleneck = require('bottleneck')
 
-const pinataApiKey = "9aab924d9c6eeb5cad63";
-const pinataSecretApiKey = "2843022459b4a601c333a89453a867787f00ec96fea8f7edd1a7efb734c37e22"
+const pinataApiKey = "a4f74909475060e86bc5";
+const pinataSecretApiKey = "20613c8666de34e2dfe80bef777b236aa9b3057cb58b5841bdd76d84ec6d0165"
 
-export const pinFileToIPFS = (image: ReadStream, name: string ) => {
+//https://docs.pinata.cloud/rate-limits
+//current pinata rate limit is 30 requests per minute (2 seconds per request)
+const axiosCallRateLimiter = new Bottleneck({
+    maxConcurrent: 1,
+    minTime: 2333
+})
+
+export const pinFileToIPFS = async (image: ReadStream, name: string ) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
 
     //we gather a local file for this example, but any valid readStream source will work here.
@@ -38,20 +46,17 @@ export const pinFileToIPFS = (image: ReadStream, name: string ) => {
     });
     data.append('pinataOptions', pinataOptions);
 
-    return axios
-        .post(url, data, {
-            maxBodyLength: 300000,
+    try {
+        const response = await axiosCallRateLimiter.schedule(() => axios.post(url, data, {
+            maxBodyLength: Infinity,
             headers: {
-                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
                 pinata_api_key: pinataApiKey,
                 pinata_secret_api_key: pinataSecretApiKey
             }
-        })
-        .then(function (response) {
-            return response.data;
-        })
-        .catch(function (error) {
-            console.error(error);
-            return;
-        });
+        }))
+        return response.data
+    } catch(error) {
+        return console.error(error)
+    }
 };

@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/node": "^17.0.22",
     "axios": "^0.26.1",
+    "bottleneck": "^2.19.5",
     "form-data": "^4.0.0"
   }
 }
